@@ -1,14 +1,10 @@
-const { ApolloServer } = require('apollo-server');
-const gql = require('graphql-tag')
-const mongoose = require('mongoose');
+const { ApolloServer } = require('apollo-server')
+const mongoose = require('mongoose')
 
-import typeDefs from './graphql/typeDefs'
+const typeDefs = require('./graphql/typeDefs')
 
-const Post = require('./models/Post')
+const resolvers = require('./graphql/resolvers')
 const { MONGODB } = require('./config/config.js')
-
-
-
 
 const server = new ApolloServer({
     typeDefs,
