@@ -1,6 +1,8 @@
-const User = require('../../models/Users')
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+const User = require('../../models/Users')
+
+const { SECRET_KEY } = require('../../config/config')
 
 module.exports = {
     Mutation: {
@@ -21,7 +23,13 @@ module.exports = {
                 id: res.id,
                 email: res.email,
                 username: res.username
-            })
+            }, SECRET_KEY, { expiresIn: '2h'})
+
+            return {
+                ...res._doc,
+                id: res._id,
+                token
+            }
         }
     }
 }
