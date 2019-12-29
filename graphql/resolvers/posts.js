@@ -40,6 +40,10 @@ module.exports = {
 
             const post = await newPost.save();
 
+            ctx.pubsub.publish('NEW_POST',{
+                newPost: post
+            })
+
             return post;
         },
         async deletePost(parent, { postId }, ctx) {
@@ -82,7 +86,7 @@ module.exports = {
     },
     Subscription: {
         newPost: {
-            subscribe:(parent, args, { pubsub }) => pubsub.asyncIterator()
+            subscribe:(parent, args, { pubsub }) => pubsub.asyncIterator('NEW_POST')
         }
     }
 }  
